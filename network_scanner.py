@@ -68,12 +68,7 @@ class Network_Scanner:
         broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
         arp_req_broadcast = broadcast/arp_request
         answered = scapy.srp(arp_req_broadcast, timeout=1)[0]
-
-
-        clients_discovered = []
-        for ans in answered:
-            client_dic = {"ip": ans[1].psrc, "mac": ans[1].hwsrc}
-            clients_discovered.append(client_dic)
+        clients_discovered = [{"ip": ans[1].psrc, "mac": ans[1].hwsrc} for ans in answered]
         
         return clients_discovered
 
